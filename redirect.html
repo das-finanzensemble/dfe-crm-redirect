@@ -1,60 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <style>
-        body { margin: 0; background: #f5f7fb; font-family: sans-serif;
-                       display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .wrap { text-align: center; padding: 24px; }
-        .hint { color: #6b7a9a; font-size: 13px; margin-bottom: 12px; }
-        .btn  { display: inline-block; padding: 14px 28px; background: #2e7eed;
-                         color: #fff; border-radius: 8px; text-decoration: none;
-                         font-size: 15px; font-weight: 600; cursor: pointer; border: none; }
-        .btn:hover { background: #1a6cd4; }
-        .debug { font-size: 11px; color: #aaa; margin-top: 16px; word-break: break-all; max-width: 600px; }
-      </style>
-  </head>
-  <body>
-    <div class="wrap">
-        <div class="hint" id="hint" style="display:none">Weiterleitung wird vorbereitet…</div>div>
-        <a class="btn" id="btn" href="#" target="_top" style="display:none">→ Pipeline öffnen</a>a>
-        <div class="debug" id="debug"></div>div>
-    </div>div>
-    <script>
-      (function(){
-          var raw = window.location.hash.slice(1);
-          var dbg = document.getElementById('debug');
-          if (!raw) { if(dbg) dbg.textContent = 'Kein Hash in URL — bitte Web-Tab-URL prüfen.'; return; }
-          var url = decodeURIComponent(raw);
-          if (url.indexOf('http') !== 0) { if(dbg) dbg.textContent = 'Ungültige Ziel-URL: ' + url; return; }
-
-          // Fallback-Link immer setzen
-          var btn = document.getElementById('btn');
-          var hint = document.getElementById('hint');
-          if (btn)  { btn.href = url; btn.style.display = 'inline-block'; }
-          if (hint) { hint.textContent = 'Weiterleitung läuft…'; hint.style.display = 'block'; }
-
-          // Methode 1: top.location.href
-          try { window.top.location.href = url; return; } catch(e1) {}
-          // Methode 2: top.location.replace
-          try { window.top.location.replace(url); return; } catch(e2) {}
-          // Methode 3: window.open _top
-          try { window.open(url, '_top'); return; } catch(e3) {}
-          // Methode 4: Anker mit target=_top programmatisch klicken
-          try {
-                var a = document.createElement('a');
-                a.href = url; a.target = '_top';
-                document.body.appendChild(a); a.click();
-                return;
-          } catch(e4) {}
-          // Alle Methoden fehlgeschlagen — Nutzer sieht den Button
-          if (hint) hint.textContent = 'Automatische Weiterleitung blockiert — bitte klicken:';
-      })();
-    </script>
-  </body>
-</html>
-    </script>
-  </body>
-    </style>
-  </head>
+<head>
+<meta charset="UTF-8">
+<style>
+body { margin: 0; background: #1a73e8; display: flex; align-items: center; justify-content: center; height: 100vh; }
+</style>
+<script>
+(function(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var url = params.get('t');
+    if (url) {
+      window.top.location.href = decodeURIComponent(url);
+    }
+  } catch(e) {}
+})();
+</script>
+</head>
+<body></body>
 </html>
