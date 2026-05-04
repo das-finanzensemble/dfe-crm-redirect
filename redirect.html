@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+  <html><head>
+  <script>
+  (function(){
+    try {
+    var h = window.location.hash.slice(1);
+    if (h && h.indexOf('http') === 0) {
+      window.top.location.href = decodeURIComponent(h);
+    }
+    } catch(e) {}
+})();
+</script>
+  </head><body></body></html>
